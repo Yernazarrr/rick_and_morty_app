@@ -35,6 +35,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   dio: ^5.9.0
+  flutter_svg: ^2.2.3
+  go_router: ^17.0.0
 
 dev_dependencies:
   flutter_test:
@@ -68,16 +70,16 @@ flutter:
     - assets/icons/person.svg
     - assets/icons/search.svg
     - assets/icons/settings.svg
-    - assets/icons/sort_by_ascending.svg
-    - assets/icons/sort_by_descending.svg
-    - assets/icons/arrow_left.svg
+    - assets/icons/sortByAscending.svg
+    - assets/icons/sortByDescending.svg
+    - assets/icons/arrowLeft.svg
     - assets/icons/characters.svg
     - assets/icons/close.svg
-    - assets/icons/disable_sort.svg
+    - assets/icons/disableSort.svg
     - assets/icons/episodes.svg
     - assets/icons/eye.svg
-    - assets/images/filter_not_found.png
-    - assets/images/character_not_found.png
+    - assets/images/filterNotFound.png
+    - assets/images/characterNotFound.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
