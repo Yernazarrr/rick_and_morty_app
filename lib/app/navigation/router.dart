@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class AppRoutes {
   AppRoutes._();
 
@@ -20,5 +18,3 @@ class AppRoutes {
   static const String episodeRoute = 'episode';
   static const String episodeProfile = '/episode';
 }
-
-final _routerKey = GlobalKey<NavigatorState>();

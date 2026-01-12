@@ -1,30 +1,27 @@
 import '../../app/api/api.dart';
 
 class LocationService extends GetEntitiesService {
-  Future<List<Location>> getAllLocations() async {
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.locationEndpoint}',
-    );
+  Future<(List<Location>, Info)> getLocations({
+    String? url,
+    LocationFilters? filters,
+  }) async {
+    final endpoint =
+        url ??
+        '${Constants.baseURL}${Constants.locationEndpoint}'
+            '${_buildFilters(filters)}';
 
-    return List<Location>.from(objects.map((x) => Location.fromJson(x)));
+    final (objects, info) = await getEntitiesWithInfo(endpoint);
+
+    final locations = objects.map((e) => Location.fromJson(e)).toList();
+
+    return (locations, info);
   }
 
-  Future<List<Location>> getListOfLocations(List<int> ids) async {
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.locationEndpoint}/$ids',
-    );
+  String _buildFilters(LocationFilters? filters) {
+    if (filters == null) return '';
 
-    return List<Location>.from(objects.map((x) => Location.fromJson(x)));
-  }
-
-  Future<List<Location>> getFilteredLocations(LocationFilters filters) async {
-    var prefs =
-        '?name=${filters.name}&type=${filters.type}&dimension=${filters.dimension}';
-
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.locationEndpoint}$prefs',
-    );
-
-    return List<Location>.from(objects.map((x) => Location.fromJson(x)));
+    return '?name=${filters.name}'
+        '&type=${filters.type}'
+        '&dimension=${filters.dimension}';
   }
 }

@@ -1,33 +1,46 @@
+import 'package:dio/dio.dart';
 import '../../app/api/api.dart';
+import '../../app/api/api_client.dart';
 import '../../app/constants/enums.dart';
 
-class CharacterService extends GetEntitiesService {
-  Future<List<Character>> getAllCharacters() async {
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.characterEndpoint}',
-    );
-
-    return List<Character>.from(objects.map((x) => Character.fromJson(x)));
-  }
-
-  Future<List<Character>> getListOfCharacters(List<int> ids) async {
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.characterEndpoint}/$ids',
-    );
-
-    return List<Character>.from(objects.map((x) => Character.fromJson(x)));
-  }
-
-  Future<List<Character>> getFilteredCharacters(
-    CharacterFilters filters,
+abstract class GetEntitiesService {
+  Future<(List<Map<String, dynamic>>, Info)> getEntitiesWithInfo(
+    String url,
   ) async {
-    var prefs =
-        '?name=${filters.name}&status=${characterStatusValues[filters.status]}&gender=${characterGenderValues[filters.gender]}&type=${filters.type}&species=${characterSpeciesValues[filters.species]}';
+    final Response response = await ApiClient.dio.get(url);
+    final data = response.data as Map<String, dynamic>;
 
-    List<Map<String, dynamic>> objects = await super.getAllEntities(
-      '${Constants.baseURL}${Constants.characterEndpoint}$prefs',
-    );
+    final info = Info.fromJson(data['info']);
+    final results = List<Map<String, dynamic>>.from(data['results']);
 
-    return List<Character>.from(objects.map((x) => Character.fromJson(x)));
+    return (results, info);
+  }
+}
+
+class CharacterService extends GetEntitiesService {
+  Future<(List<Character>, Info)> getCharacters({
+    String? url,
+    CharacterFilters? filters,
+  }) async {
+    final endpoint =
+        url ??
+        '${Constants.baseURL}${Constants.characterEndpoint}'
+            '${_buildFilters(filters)}';
+
+    final (objects, info) = await getEntitiesWithInfo(endpoint);
+
+    final characters = objects.map((e) => Character.fromJson(e)).toList();
+
+    return (characters, info);
+  }
+
+  String _buildFilters(CharacterFilters? filters) {
+    if (filters == null) return '';
+
+    return '?name=${filters.name}'
+        '&status=${characterStatusValues[filters.status]}'
+        '&gender=${characterGenderValues[filters.gender]}'
+        '&type=${filters.type}'
+        '&species=${characterSpeciesValues[filters.species]}';
   }
 }

@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppTheme {
-  AppTheme._();
-
-  final lightTheme = ThemeData.light();
-
-  final darkTheme = ThemeData.dark();
+  final theme = const CupertinoThemeData(
+    textTheme: CupertinoTextThemeData(textStyle: TextStyle()),
+  );
 }

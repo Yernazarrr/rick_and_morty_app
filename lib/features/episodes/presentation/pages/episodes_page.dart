@@ -6,8 +6,8 @@ class EpisodesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text('Characters Page')),
-      child: Center(child: Text('Characters Page!')),
+      navigationBar: CupertinoNavigationBar(middle: Text('Episodes Page')),
+      child: Center(child: Text('Episodes Page!')),
     );
   }
 }
