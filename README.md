@@ -1,16 +1,6 @@
-# rick_and_morty_app
+# Rick and Morty app
 
-A new Flutter project.
+A Rick and Morty mobile application on Dart/Flutter.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<img width="300" height="1000" alt="98621FFB-1353-4431-B461-226D35370629" src="https://github.com/user-attachments/assets/1452d565-db59-4f0f-bd9e-e71f1e4db669" />
+<img width="300" height="1000" alt="708FD7D1-6625-483F-A91D-BC331500EB91" src="https://github.com/user-attachments/assets/7babecd5-fce9-465a-99d0-27b0809ed200" />
