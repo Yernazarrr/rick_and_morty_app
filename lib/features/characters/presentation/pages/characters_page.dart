@@ -15,13 +15,17 @@ class CharactersPage extends StatefulWidget {
 class _CharactersPageState extends State<CharactersPage> {
   final CharacterService _service = CharacterService();
 
+  bool isLoading = false;
+  bool isRefreshing = false;
+
+  bool isSearching = false;
+  final TextEditingController _searchController = TextEditingController();
+
   final List<Character> _characters = [];
-  Info? _info;
 
   bool isGrid = true;
-  bool isLoading = false;
 
-  final CharacterFilters _filters = CharacterFilters();
+  CharacterFilters? _filters;
 
   @override
   void initState() {
@@ -30,35 +34,32 @@ class _CharactersPageState extends State<CharactersPage> {
   }
 
   Future<void> _loadInitial() async {
-    setState(() => isLoading = true);
+    if (!isRefreshing) {
+      setState(() => isLoading = true);
+    }
 
-    final (characters, info) = await _service.getCharacters(filters: _filters);
+    _characters.clear();
+
+    String? nextUrl =
+        '${Constants.baseURL}${Constants.characterEndpoint}'
+        '${_filters == null ? '' : _service.buildFiltersForUI(_filters)}';
+
+    while (nextUrl != null) {
+      final (characters, info) = await _service.getCharacters(url: nextUrl);
+
+      _characters.addAll(characters);
+      nextUrl = info.next;
+    }
 
     setState(() {
-      _characters
-        ..clear()
-        ..addAll(characters);
-      _info = info;
       isLoading = false;
     });
   }
 
   Future<void> _refresh() async {
+    setState(() => isRefreshing = true);
     await _loadInitial();
-  }
-
-  Future<void> _loadMore() async {
-    if (_info?.next == null || isLoading) return;
-
-    setState(() => isLoading = true);
-
-    final (characters, info) = await _service.getCharacters(url: _info!.next);
-
-    setState(() {
-      _characters.addAll(characters);
-      _info = info;
-      isLoading = false;
-    });
+    setState(() => isRefreshing = false);
   }
 
   @override
@@ -78,9 +79,14 @@ class _CharactersPageState extends State<CharactersPage> {
                   ),
                   SliverToBoxAdapter(
                     child: isLoading
-                        ? const Padding(
-                            padding: EdgeInsets.all(16),
-                            child: CupertinoActivityIndicator(),
+                        ? Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: (isLoading && !isRefreshing)
+                                ? const Padding(
+                                    padding: EdgeInsets.all(16),
+                                    child: CupertinoActivityIndicator(),
+                                  )
+                                : const SizedBox.shrink(),
                           )
                         : const SizedBox.shrink(),
                   ),
@@ -95,27 +101,132 @@ class _CharactersPageState extends State<CharactersPage> {
 
   Widget _header() {
     return Padding(
-      padding: const EdgeInsets.all(12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Column(
         children: [
-          Text('Всего персонажей: ${_characters.length}'.toUpperCase()),
-          CupertinoButton(
-            padding: EdgeInsets.zero,
-            onPressed: () => setState(() => isGrid = !isGrid),
-            child: isGrid ? AppIcons.list() : AppIcons.grid(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Всего персонажей: ${_characters.length}'.toUpperCase()),
+              Row(
+                children: [
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      setState(() => isSearching = !isSearching);
+                    },
+                    child: const Icon(CupertinoIcons.search),
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: _openFilters,
+                    child: const Icon(CupertinoIcons.slider_horizontal_3),
+                  ),
+                  CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () => setState(() => isGrid = !isGrid),
+                    child: isGrid ? AppIcons.list() : AppIcons.grid(),
+                  ),
+                ],
+              ),
+            ],
           ),
+
+          if (isSearching) _searchField(),
         ],
       ),
     );
   }
 
+  Widget _searchField() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: CupertinoSearchTextField(
+        controller: _searchController,
+        placeholder: 'Поиск по имени',
+        onChanged: (value) {
+          if (value.isEmpty) {
+            _filters = null;
+          } else {
+            _filters = CharacterFilters(name: value);
+          }
+          _loadInitial();
+        },
+      ),
+    );
+  }
+
+  void _openFilters() {
+    showCupertinoModalPopup(
+      context: context,
+      builder: (_) => CupertinoActionSheet(
+        title: const Text('Фильтры'),
+        actions: [
+          _filterAction(
+            title: 'Alive',
+            onTap: () => _applyStatus(CharacterStatus.alive),
+          ),
+          _filterAction(
+            title: 'Dead',
+            onTap: () => _applyStatus(CharacterStatus.dead),
+          ),
+          _filterAction(
+            title: 'Male',
+            onTap: () => _applyGender(CharacterGender.male),
+          ),
+          _filterAction(
+            title: 'Female',
+            onTap: () => _applyGender(CharacterGender.female),
+          ),
+        ],
+        cancelButton: CupertinoActionSheetAction(
+          onPressed: () {
+            _filters = const CharacterFilters();
+            _loadInitial();
+            Navigator.pop(context);
+          },
+          child: const Text('Сбросить фильтры'),
+        ),
+      ),
+    );
+  }
+
+  CupertinoActionSheetAction _filterAction({
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return CupertinoActionSheetAction(
+      onPressed: () {
+        onTap();
+        Navigator.pop(context);
+      },
+      child: Text(title),
+    );
+  }
+
+  void _applyStatus(CharacterStatus status) {
+    _filters = CharacterFilters(name: _filters?.name, status: status);
+
+    if (_filters!.isEmpty) {
+      _filters = null;
+    }
+
+    _loadInitial();
+  }
+
+  void _applyGender(CharacterGender gender) {
+    _filters = CharacterFilters(name: _filters?.name, gender: gender);
+
+    if (_filters!.isEmpty) {
+      _filters = null;
+    }
+
+    _loadInitial();
+  }
+
   SliverGrid _grid() {
     return SliverGrid(
       delegate: SliverChildBuilderDelegate((context, index) {
-        if (index == _characters.length - 1) {
-          _loadMore();
-        }
         return CharacterGridCard(character: _characters[index]);
       }, childCount: _characters.length),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -130,9 +241,6 @@ class _CharactersPageState extends State<CharactersPage> {
   SliverList _list() {
     return SliverList(
       delegate: SliverChildBuilderDelegate((context, index) {
-        if (index == _characters.length - 1) {
-          _loadMore();
-        }
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: CharacterListTile(character: _characters[index]),

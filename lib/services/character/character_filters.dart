@@ -1,4 +1,4 @@
-import '../../app/constants/enums.dart';
+import '../../app/api/api.dart';
 
 class CharacterFilters {
   final String? name;
@@ -7,11 +7,18 @@ class CharacterFilters {
   final String? type;
   final CharacterGender? gender;
 
-  CharacterFilters({
-    this.name = '',
-    this.status = CharacterStatus.empty,
-    this.species = CharacterSpecies.empty,
-    this.type = '',
-    this.gender = CharacterGender.empty,
+  const CharacterFilters({
+    this.name,
+    this.status,
+    this.species,
+    this.type,
+    this.gender,
   });
+
+  bool get isEmpty =>
+      name == null &&
+      status == null &&
+      species == null &&
+      type == null &&
+      gender == null;
 }

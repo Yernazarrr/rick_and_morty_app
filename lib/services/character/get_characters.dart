@@ -34,13 +34,31 @@ class CharacterService extends GetEntitiesService {
     return (characters, info);
   }
 
-  String _buildFilters(CharacterFilters? filters) {
-    if (filters == null) return '';
+  String buildFiltersForUI(CharacterFilters? filters) {
+    return _buildFilters(filters);
+  }
 
-    return '?name=${filters.name}'
-        '&status=${characterStatusValues[filters.status]}'
-        '&gender=${characterGenderValues[filters.gender]}'
-        '&type=${filters.type}'
-        '&species=${characterSpeciesValues[filters.species]}';
+  String _buildFilters(CharacterFilters? filters) {
+    if (filters == null || filters.isEmpty) return '';
+
+    final params = <String>[];
+
+    if (filters.name != null && filters.name!.isNotEmpty) {
+      params.add('name=${filters.name}');
+    }
+    if (filters.status != null) {
+      params.add('status=${characterStatusValues[filters.status]}');
+    }
+    if (filters.gender != null) {
+      params.add('gender=${characterGenderValues[filters.gender]}');
+    }
+    if (filters.species != null) {
+      params.add('species=${characterSpeciesValues[filters.species]}');
+    }
+    if (filters.type != null && filters.type!.isNotEmpty) {
+      params.add('type=${filters.type}');
+    }
+
+    return params.isEmpty ? '' : '?${params.join('&')}';
   }
 }
