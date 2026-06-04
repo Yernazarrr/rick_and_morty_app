@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_typography.dart';
 
-/// Builds the light and dark [ThemeData] for the app.
+/// Создает светлые и темные [ThemeData] для приложения.
 abstract final class AppTheme {
   const AppTheme._();
 
@@ -113,7 +113,8 @@ abstract final class AppTheme {
   }
 }
 
-/// Theme extension exposing status colours (alive/dead/unknown) to widgets.
+/// Расширение темы, предоставляющее виджетам возможность
+/// выбора цветов состояния (активен/неактивен/неизвестен).
 @immutable
 class AppStatusColors extends ThemeExtension<AppStatusColors> {
   const AppStatusColors({

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Shared text styles. Keeps presentation widgets free of magic numbers.
+/// Общие стили текста. Предохраняет виджеты презентаций от магических чисел.
 abstract final class AppTypography {
   const AppTypography._();
 

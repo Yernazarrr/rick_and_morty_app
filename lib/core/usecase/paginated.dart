@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-/// Generic paginated result wrapping the API's `info` + `results`.
+/// Общий результат с разбивкой на страницы, заключающий в себе `info` + `results` API.
 class Paginated<T> extends Equatable {
   const Paginated({
     required this.items,

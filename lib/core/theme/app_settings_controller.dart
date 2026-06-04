@@ -4,9 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants/app_constants.dart';
 
-/// App-wide preferences (theme mode + locale) backed by SharedPreferences.
-/// Uses `provider`'s [ChangeNotifier] as required by the stack, while feature
-/// state is handled by BLoC.
+/// Настройки всего приложения (режим темы + локаль) поддерживаются SharedPreferences.
+/// Использует [ChangeNotifier] `provider` в то время как состояние функций обрабатывается BLoC.
 @lazySingleton
 class AppSettingsController extends ChangeNotifier {
   AppSettingsController(this._prefs) {

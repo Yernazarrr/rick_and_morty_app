@@ -3,13 +3,12 @@ import 'package:fpdart/fpdart.dart';
 
 import '../error/failures.dart';
 
-/// Base contract for all use cases.
-/// [Type] is the success result, [Params] the input arguments.
+/// Базовый контракт для всех вариантов использования.
+/// [Type] — результат успеха, [Params] — входные аргументы.
 abstract interface class UseCase<T, Params> {
   Future<Either<Failure, T>> call(Params params);
 }
 
-/// Use this when a use case requires no parameters.
 class NoParams extends Equatable {
   const NoParams();
 

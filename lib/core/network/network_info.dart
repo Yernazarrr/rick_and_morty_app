@@ -1,8 +1,8 @@
 import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-/// Abstraction over connectivity so the data layer can check the network
-/// without depending on a concrete package.
+/// Абстракция для проверки сети, чтобы уровень данных мог проверять сеть
+/// вне зависимости от конкретного пакета.
 abstract interface class NetworkInfo {
   Future<bool> get isConnected;
   Stream<bool> get onStatusChange;
