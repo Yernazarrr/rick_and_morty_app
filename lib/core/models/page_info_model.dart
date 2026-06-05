@@ -1,22 +1,21 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'page_info_model.freezed.dart';
 part 'page_info_model.g.dart';
 
-/// Сопоставляет объект `info` API, используемого эндпойнта для постраничного списка.
-@JsonSerializable(createToJson: false)
-class PageInfoModel {
-  const PageInfoModel({
-    required this.count,
-    required this.pages,
-    this.next,
-    this.prev,
-  });
+/// Сопоставляет объект `info` из ответа API для постраничных списков.
+@freezed
+abstract class PageInfoModel with _$PageInfoModel {
+  const PageInfoModel._();
 
-  final int count;
-  final int pages;
-  final String? next;
-  final String? prev;
+  const factory PageInfoModel({
+    required int count,
+    required int pages,
+    String? next,
+    String? prev,
+  }) = _PageInfoModel;
 
+  /// Есть ли следующая страница.
   bool get hasNext => next != null;
 
   factory PageInfoModel.fromJson(Map<String, dynamic> json) =>

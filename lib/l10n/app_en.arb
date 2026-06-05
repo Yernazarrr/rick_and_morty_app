@@ -1,0 +1,100 @@
+{
+  "@@locale": "en",
+  "appName": "Rick & Morty",
+  "navCharacters": "Characters",
+  "navLocations": "Locations",
+  "navEpisodes": "Episodes",
+  "navSettings": "Settings",
+
+  "searchCharacterHint": "Find a character",
+  "searchLocationHint": "Find a location",
+  "searchEpisodeHint": "Find an episode",
+
+  "totalCharacters": "Total characters: {count}",
+  "@totalCharacters": { "placeholders": { "count": { "type": "int" } } },
+  "totalLocations": "Total locations: {count}",
+  "@totalLocations": { "placeholders": { "count": { "type": "int" } } },
+
+  "statusAlive": "Alive",
+  "statusDead": "Dead",
+  "statusUnknown": "Unknown",
+
+  "genderMale": "Male",
+  "genderFemale": "Female",
+  "genderGenderless": "Genderless",
+  "genderUnknown": "Unknown",
+
+  "fieldGender": "Gender",
+  "fieldSpecies": "Species",
+  "fieldOrigin": "Origin",
+  "fieldLocation": "Location",
+  "fieldType": "Type",
+  "fieldDimension": "Dimension",
+
+  "sectionEpisodes": "Episodes",
+  "sectionCharacters": "Characters",
+  "sectionResidents": "Residents",
+  "allEpisodes": "All episodes",
+  "episodeNumber": "Episode {number}",
+  "@episodeNumber": { "placeholders": { "number": { "type": "int" } } },
+  "premiere": "Premiere",
+  "seasonTab": "Season {number}",
+  "@seasonTab": { "placeholders": { "number": { "type": "int" } } },
+
+  "settingsTitle": "Settings",
+  "settingsEdit": "Edit",
+  "settingsAppearance": "Appearance",
+  "settingsDarkTheme": "Dark theme",
+  "settingsThemeOn": "Enabled",
+  "settingsThemeOff": "Disabled",
+  "settingsAbout": "About",
+  "settingsVersion": "App version",
+  "settingsAboutText": "An app for the Rick and Morty universe: characters, locations and episodes with search and filtering.",
+
+  "filterTitle": "Filters",
+  "filterApply": "Apply",
+  "filterReset": "Reset",
+  "filterStatus": "Status",
+  "filterGender": "Gender",
+  "filterSpecies": "Species",
+  "filterAll": "All",
+
+  "errorTitle": "Something went wrong",
+  "errorNoInternet": "No internet connection",
+  "errorServer": "Server error, try again later",
+  "errorNotFound": "Nothing found",
+  "retry": "Retry",
+  "emptyList": "The list is empty",
+
+  "characterSummary": "{name} is a {species} ({gender}).\nCurrent status: {status}.\nOrigin: {origin}.\nLast known location: {location}.\nNumber of episodes featuring this character: {episodes}.",
+  "@characterSummary": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "species": { "type": "String" },
+      "gender": { "type": "String" },
+      "status": { "type": "String" },
+      "origin": { "type": "String" },
+      "location": { "type": "String" },
+      "episodes": { "type": "int" }
+    }
+  },
+  "episodeSummary": "Season {season}, episode {number} (code {code}). Air date: {airDate}. Characters in this episode: {characters}.",
+  "@episodeSummary": {
+    "placeholders": {
+      "season": { "type": "int" },
+      "number": { "type": "int" },
+      "code": { "type": "String" },
+      "airDate": { "type": "String" },
+      "characters": { "type": "int" }
+    }
+  },
+  "locationSummary": "{name} — type: {type}, dimension: {dimension}. Number of known residents: {residents}.",
+  "@locationSummary": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "type": { "type": "String" },
+      "dimension": { "type": "String" },
+      "residents": { "type": "int" }
+    }
+  }
+}

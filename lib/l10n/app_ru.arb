@@ -1,0 +1,100 @@
+{
+  "@@locale": "ru",
+  "appName": "Rick & Morty",
+  "navCharacters": "Персонажи",
+  "navLocations": "Локации",
+  "navEpisodes": "Эпизоды",
+  "navSettings": "Настройки",
+
+  "searchCharacterHint": "Найти персонажа",
+  "searchLocationHint": "Найти локацию",
+  "searchEpisodeHint": "Найти эпизод",
+
+  "totalCharacters": "Всего персонажей: {count}",
+  "@totalCharacters": { "placeholders": { "count": { "type": "int" } } },
+  "totalLocations": "Всего локаций: {count}",
+  "@totalLocations": { "placeholders": { "count": { "type": "int" } } },
+
+  "statusAlive": "Живой",
+  "statusDead": "Мёртвый",
+  "statusUnknown": "Неизвестно",
+
+  "genderMale": "Мужской",
+  "genderFemale": "Женский",
+  "genderGenderless": "Бесполый",
+  "genderUnknown": "Неизвестно",
+
+  "fieldGender": "Пол",
+  "fieldSpecies": "Раса",
+  "fieldOrigin": "Место рождения",
+  "fieldLocation": "Местоположение",
+  "fieldType": "Тип",
+  "fieldDimension": "Измерение",
+
+  "sectionEpisodes": "Эпизоды",
+  "sectionCharacters": "Персонажи",
+  "sectionResidents": "Персонажи",
+  "allEpisodes": "Все эпизоды",
+  "episodeNumber": "Серия {number}",
+  "@episodeNumber": { "placeholders": { "number": { "type": "int" } } },
+  "premiere": "Премьера",
+  "seasonTab": "Сезон {number}",
+  "@seasonTab": { "placeholders": { "number": { "type": "int" } } },
+
+  "settingsTitle": "Настройки",
+  "settingsEdit": "Редактировать",
+  "settingsAppearance": "Внешний вид",
+  "settingsDarkTheme": "Тёмная тема",
+  "settingsThemeOn": "Включена",
+  "settingsThemeOff": "Выключена",
+  "settingsAbout": "О приложении",
+  "settingsVersion": "Версия приложения",
+  "settingsAboutText": "Приложение по вселенной «Рик и Морти»: персонажи, локации и эпизоды с возможностью поиска и фильтрации.",
+
+  "filterTitle": "Фильтры",
+  "filterApply": "Применить",
+  "filterReset": "Сбросить",
+  "filterStatus": "Статус",
+  "filterGender": "Пол",
+  "filterSpecies": "Раса",
+  "filterAll": "Все",
+
+  "errorTitle": "Что-то пошло не так",
+  "errorNoInternet": "Нет подключения к интернету",
+  "errorServer": "Ошибка сервера, попробуйте позже",
+  "errorNotFound": "Ничего не найдено",
+  "retry": "Повторить",
+  "emptyList": "Список пуст",
+
+  "characterSummary": "{name} — {species} ({gender}).\nТекущий статус: {status}.\nМесто рождения: {origin}.\nПоследняя известная локация: {location}.\nКоличество эпизодов с участием персонажа: {episodes}.",
+  "@characterSummary": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "species": { "type": "String" },
+      "gender": { "type": "String" },
+      "status": { "type": "String" },
+      "origin": { "type": "String" },
+      "location": { "type": "String" },
+      "episodes": { "type": "int" }
+    }
+  },
+  "episodeSummary": "Сезон {season}, серия {number} (код {code}). Дата выхода: {airDate}. Персонажей в эпизоде: {characters}.",
+  "@episodeSummary": {
+    "placeholders": {
+      "season": { "type": "int" },
+      "number": { "type": "int" },
+      "code": { "type": "String" },
+      "airDate": { "type": "String" },
+      "characters": { "type": "int" }
+    }
+  },
+  "locationSummary": "{name} — тип: {type}, измерение: {dimension}. Количество известных жителей: {residents}.",
+  "@locationSummary": {
+    "placeholders": {
+      "name": { "type": "String" },
+      "type": { "type": "String" },
+      "dimension": { "type": "String" },
+      "residents": { "type": "int" }
+    }
+  }
+}
