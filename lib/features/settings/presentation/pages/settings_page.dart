@@ -23,6 +23,9 @@ class SettingsPage extends StatelessWidget {
           _SectionLabel(l10n.settingsAppearance),
           const _ThemeTile(),
           const _SectionDivider(),
+          _SectionLabel(l10n.settingsLanguage),
+          const _LanguageTile(),
+          const _SectionDivider(),
           _SectionLabel(l10n.settingsAbout),
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
@@ -116,6 +119,39 @@ class _ThemeTile extends StatelessWidget {
           Text(settings.isDark ? l10n.settingsThemeOn : l10n.settingsThemeOff),
       value: settings.isDark,
       onChanged: (v) => context.read<AppSettingsController>().setDarkMode(v),
+    );
+  }
+}
+
+/// Переключатель языка интерфейса. Названия языков показаны в их родной форме
+/// (Русский / English) независимо от текущей локали, как принято в выборе языка.
+class _LanguageTile extends StatelessWidget {
+  const _LanguageTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final settings = context.watch<AppSettingsController>();
+    final l10n = context.l10n;
+    // Если язык явно не выбран (locale == null) — подсвечиваем тот, что
+    // приложение выбрало под системную локаль.
+    final current = settings.locale?.languageCode ??
+        Localizations.localeOf(context).languageCode;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+      child: SizedBox(
+        width: double.infinity,
+        child: SegmentedButton<String>(
+          showSelectedIcon: false,
+          segments: [
+            ButtonSegment(value: 'ru', label: Text(l10n.languageRussian)),
+            ButtonSegment(value: 'en', label: Text(l10n.languageEnglish)),
+          ],
+          selected: {current},
+          onSelectionChanged: (selection) => context
+              .read<AppSettingsController>()
+              .setLocale(Locale(selection.first)),
+        ),
+      ),
     );
   }
 }

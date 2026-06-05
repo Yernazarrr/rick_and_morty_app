@@ -311,6 +311,24 @@ abstract class AppLocalizations {
   /// **'Disabled'**
   String get settingsThemeOff;
 
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @languageRussian.
+  ///
+  /// In en, this message translates to:
+  /// **'Русский'**
+  String get languageRussian;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
   /// No description provided for @settingsAbout.
   ///
   /// In en, this message translates to:

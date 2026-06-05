@@ -125,6 +125,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeOff => 'Disabled';
 
   @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get languageRussian => 'Русский';
+
+  @override
+  String get languageEnglish => 'English';
+
+  @override
   String get settingsAbout => 'About';
 
   @override
