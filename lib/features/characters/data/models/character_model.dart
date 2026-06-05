@@ -12,10 +12,8 @@ part 'character_model.g.dart';
 abstract class CharacterRefModel with _$CharacterRefModel {
   const CharacterRefModel._();
 
-  const factory CharacterRefModel({
-    required String name,
-    required String url,
-  }) = _CharacterRefModel;
+  const factory CharacterRefModel({required String name, required String url}) =
+      _CharacterRefModel;
 
   factory CharacterRefModel.fromJson(Map<String, dynamic> json) =>
       _$CharacterRefModelFromJson(json);
@@ -49,16 +47,16 @@ abstract class CharacterModel with _$CharacterModel {
 
   /// Преобразует модель в доменную сущность персонажа.
   Character toEntity() => Character(
-        id: id,
-        name: name,
-        status: CharacterStatus.fromApi(status),
-        species: species,
-        type: type,
-        gender: CharacterGender.fromApi(gender),
-        image: image,
-        origin: origin.toEntity(),
-        location: location.toEntity(),
-        episodeIds: idsFromUrls(episode),
-        created: created == null ? null : DateTime.tryParse(created!),
-      );
+    id: id,
+    name: name,
+    status: CharacterStatus.fromApi(status),
+    species: species,
+    type: type,
+    gender: CharacterGender.fromApi(gender),
+    image: image,
+    origin: origin.toEntity(),
+    location: location.toEntity(),
+    episodeIds: idsFromUrls(episode),
+    created: created == null ? null : DateTime.tryParse(created!),
+  );
 }

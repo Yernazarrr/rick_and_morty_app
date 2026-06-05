@@ -30,9 +30,6 @@ class AppRouter {
   );
 }
 
-/// ---------------------------------------------------------------------------
-/// Bottom-navigation shell (StatefulShellRoute -> keeps each tab's state).
-/// ---------------------------------------------------------------------------
 @TypedStatefulShellRoute<MainShellRouteData>(
   branches: <TypedStatefulShellBranch<StatefulShellBranchData>>[
     TypedStatefulShellBranch<CharactersBranchData>(
@@ -99,9 +96,7 @@ class SettingsBranchData extends StatefulShellBranchData {
   const SettingsBranchData();
 }
 
-/// ---------------------------------------------------------------------------
 /// Персонажи
-/// ---------------------------------------------------------------------------
 class CharactersRoute extends GoRouteData with $CharactersRoute {
   const CharactersRoute();
   static const String path = '/characters';
@@ -120,9 +115,7 @@ class CharacterDetailRoute extends GoRouteData with $CharacterDetailRoute {
       CharacterDetailPage(id: id);
 }
 
-/// ---------------------------------------------------------------------------
 /// Локации
-/// ---------------------------------------------------------------------------
 class LocationsRoute extends GoRouteData with $LocationsRoute {
   const LocationsRoute();
   static const String path = '/locations';
@@ -141,9 +134,7 @@ class LocationDetailRoute extends GoRouteData with $LocationDetailRoute {
       LocationDetailPage(id: id);
 }
 
-/// ---------------------------------------------------------------------------
 /// Эпизоды
-/// ---------------------------------------------------------------------------
 class EpisodesRoute extends GoRouteData with $EpisodesRoute {
   const EpisodesRoute();
   static const String path = '/episodes';
@@ -162,9 +153,7 @@ class EpisodeDetailRoute extends GoRouteData with $EpisodeDetailRoute {
       EpisodeDetailPage(id: id);
 }
 
-/// ---------------------------------------------------------------------------
 /// Настройки
-/// ---------------------------------------------------------------------------
 class SettingsRoute extends GoRouteData with $SettingsRoute {
   const SettingsRoute();
   static const String path = '/settings';
