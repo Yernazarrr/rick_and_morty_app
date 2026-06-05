@@ -6,6 +6,7 @@ import '../../../../core/localization/ru_glossary.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/avatar_collage.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/section_header.dart';
@@ -64,7 +65,11 @@ class _Content extends StatelessWidget {
     final l10n = context.l10n;
     return CustomScrollView(
       slivers: [
-        const SliverToBoxAdapter(child: _Hero()),
+        SliverToBoxAdapter(
+          child: _Hero(
+            imageUrls: characters.take(4).map((c) => c.image as String).toList(),
+          ),
+        ),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
@@ -121,30 +126,38 @@ class _Content extends StatelessWidget {
   }
 }
 
-/// Декоративный hero с кнопкой воспроизведения (у эпизодов нет изображения в API).
+/// Hero эпизода: коллаж из аватаров персонажей эпизода. У эпизодов нет
+/// собственного изображения в API, поэтому пока персонажи не загрузились
+/// показываем декоративный градиент.
 class _Hero extends StatelessWidget {
-  const _Hero();
+  const _Hero({this.imageUrls = const []});
+
+  /// Аватары персонажей эпизода для обложки-коллажа.
+  final List<String> imageUrls;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Container(
+        SizedBox(
           height: 220,
           width: double.infinity,
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [AppColors.accentDark, AppColors.accent],
-            ),
-          ),
-        ),
-        const CircleAvatar(
-          radius: 28,
-          backgroundColor: AppColors.accent,
-          child: Icon(Icons.play_arrow_rounded, color: Colors.white, size: 34),
+          child: imageUrls.isEmpty
+              ? const DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [AppColors.accentDark, AppColors.accent],
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(Icons.movie_outlined,
+                        color: Colors.white70, size: 56),
+                  ),
+                )
+              : AvatarCollage(imageUrls: imageUrls),
         ),
         const Positioned(
           left: 12,

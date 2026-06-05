@@ -129,6 +129,7 @@ class _LocationsViewState extends State<_LocationsView> {
               final location = state.locations[index];
               return LocationCard(
                 location: location,
+                coverImages: state.coverImagesFor(location),
                 onTap: () =>
                     LocationDetailRoute(id: location.id).push(context),
               );

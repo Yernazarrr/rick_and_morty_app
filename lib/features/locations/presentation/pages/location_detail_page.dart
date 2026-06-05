@@ -6,6 +6,7 @@ import '../../../../core/localization/ru_glossary.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/avatar_collage.dart';
 import '../../../../core/widgets/error_view.dart';
 import '../../../../core/widgets/loading_indicator.dart';
 import '../../../../core/widgets/section_header.dart';
@@ -69,7 +70,13 @@ class _Content extends StatelessWidget {
 
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(child: _Hero(seed: location.id)),
+        SliverToBoxAdapter(
+          child: _Hero(
+            seed: location.id,
+            imageUrls:
+                residents.take(4).map((r) => r.image as String).toList(),
+          ),
+        ),
         SliverToBoxAdapter(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 20, 20, 4),
@@ -124,8 +131,11 @@ class _Content extends StatelessWidget {
 }
 
 class _Hero extends StatelessWidget {
-  const _Hero({required this.seed});
+  const _Hero({required this.seed, this.imageUrls = const []});
   final int seed;
+
+  /// Аватары жителей для обложки-коллажа; пусто — пока грузятся или их нет.
+  final List<String> imageUrls;
 
   @override
   Widget build(BuildContext context) {
@@ -133,19 +143,23 @@ class _Hero extends StatelessWidget {
     final base = HSLColor.fromAHSL(1, hue.toDouble(), 0.45, 0.4).toColor();
     return Stack(
       children: [
-        Container(
+        SizedBox(
           height: 200,
           width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [base, AppColors.darkBackground],
-            ),
-          ),
-          child: const Center(
-            child: Icon(Icons.public, color: Colors.white70, size: 72),
-          ),
+          child: imageUrls.isEmpty
+              ? DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [base, AppColors.darkBackground],
+                    ),
+                  ),
+                  child: const Center(
+                    child: Icon(Icons.public, color: Colors.white70, size: 72),
+                  ),
+                )
+              : AvatarCollage(imageUrls: imageUrls),
         ),
         const Positioned(
           left: 12,

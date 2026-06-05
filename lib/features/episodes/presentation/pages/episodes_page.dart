@@ -90,7 +90,10 @@ class _EpisodesView extends StatelessWidget {
                 child: TabBarView(
                   children: [
                     for (final s in seasons)
-                      _SeasonList(episodes: bySeason[s] ?? const []),
+                      _SeasonList(
+                        episodes: bySeason[s] ?? const [],
+                        state: state,
+                      ),
                   ],
                 ),
               ),
@@ -102,8 +105,9 @@ class _EpisodesView extends StatelessWidget {
 }
 
 class _SeasonList extends StatelessWidget {
-  const _SeasonList({required this.episodes});
+  const _SeasonList({required this.episodes, required this.state});
   final List<dynamic> episodes;
+  final EpisodesListState state;
 
   @override
   Widget build(BuildContext context) {
@@ -123,6 +127,7 @@ class _SeasonList extends StatelessWidget {
         final episode = episodes[index];
         return EpisodeListTile(
           episode: episode,
+          coverImages: state.coverImagesFor(episode),
           onTap: () => EpisodeDetailRoute(id: episode.id).push(context),
         );
       },

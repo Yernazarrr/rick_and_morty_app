@@ -163,15 +163,15 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i415.GetCharactersByIds>(),
       ),
     );
-    gh.factory<_i37.LocationsListBloc>(
-      () => _i37.LocationsListBloc(gh<_i190.GetLocations>()),
-    );
-    gh.factory<_i925.EpisodesListCubit>(
-      () => _i925.EpisodesListCubit(gh<_i929.GetEpisodes>()),
-    );
     gh.factory<_i542.LocationDetailCubit>(
       () => _i542.LocationDetailCubit(
         gh<_i280.GetLocation>(),
+        gh<_i415.GetCharactersByIds>(),
+      ),
+    );
+    gh.factory<_i925.EpisodesListCubit>(
+      () => _i925.EpisodesListCubit(
+        gh<_i929.GetEpisodes>(),
         gh<_i415.GetCharactersByIds>(),
       ),
     );
@@ -179,6 +179,12 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i891.CharacterDetailCubit(
         gh<_i947.GetCharacter>(),
         gh<_i321.GetEpisodesByIds>(),
+      ),
+    );
+    gh.factory<_i37.LocationsListBloc>(
+      () => _i37.LocationsListBloc(
+        gh<_i190.GetLocations>(),
+        gh<_i415.GetCharactersByIds>(),
       ),
     );
     gh.factory<_i108.CharactersListBloc>(

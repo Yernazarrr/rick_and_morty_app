@@ -10,6 +10,7 @@ class LocationsListState extends Equatable {
     this.totalCount = 0,
     this.hasReachedMax = false,
     this.isLoadingMore = false,
+    this.characterImages = const {},
     this.failure,
   });
 
@@ -19,7 +20,18 @@ class LocationsListState extends Equatable {
   final int totalCount;
   final bool hasReachedMax;
   final bool isLoadingMore;
+
+  /// Аватары персонажей по id — для обложек-коллажей карточек локаций
+  /// (id персонажа -> URL изображения). Подгружаются отдельным запросом.
+  final Map<int, String> characterImages;
   final Failure? failure;
+
+  /// URL аватаров первых жителей локации — основа обложки-коллажа.
+  List<String> coverImagesFor(Location location) => location.residentIds
+      .take(4)
+      .map((id) => characterImages[id])
+      .whereType<String>()
+      .toList();
 
   LocationsListState copyWith({
     LocationsStatus? status,
@@ -28,6 +40,7 @@ class LocationsListState extends Equatable {
     int? totalCount,
     bool? hasReachedMax,
     bool? isLoadingMore,
+    Map<int, String>? characterImages,
     Failure? failure,
     bool clearFailure = false,
   }) =>
@@ -38,6 +51,7 @@ class LocationsListState extends Equatable {
         totalCount: totalCount ?? this.totalCount,
         hasReachedMax: hasReachedMax ?? this.hasReachedMax,
         isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+        characterImages: characterImages ?? this.characterImages,
         failure: clearFailure ? null : (failure ?? this.failure),
       );
 
@@ -49,6 +63,7 @@ class LocationsListState extends Equatable {
         totalCount,
         hasReachedMax,
         isLoadingMore,
+        characterImages,
         failure,
       ];
 }

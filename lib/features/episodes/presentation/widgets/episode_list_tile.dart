@@ -3,15 +3,24 @@ import 'package:flutter/material.dart';
 import '../../../../core/localization/ru_glossary.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/utils/extensions.dart';
+import '../../../../core/widgets/avatar_collage.dart';
 import '../../domain/entities/episode.dart';
 
 /// Строка одного эпизода (используется в списке эпизодов, а также на
 /// экранах деталей персонажа и локации).
 class EpisodeListTile extends StatelessWidget {
-  const EpisodeListTile({super.key, required this.episode, required this.onTap});
+  const EpisodeListTile({
+    super.key,
+    required this.episode,
+    required this.onTap,
+    this.coverImages = const [],
+  });
 
   final Episode episode;
   final VoidCallback onTap;
+
+  /// URL аватаров персонажей эпизода для миниатюры-коллажа.
+  final List<String> coverImages;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +30,7 @@ class EpisodeListTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           children: [
-            _Thumbnail(code: episode.code),
+            _Thumbnail(code: episode.code, imageUrls: coverImages),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -53,21 +62,38 @@ class EpisodeListTile extends StatelessWidget {
   }
 }
 
-/// Декоративная миниатюра — у эпизодов нет изображения в API, поэтому вместо
-/// выдуманного контента показываем код эпизода на цветной плитке.
+/// Миниатюра эпизода: коллаж из аватаров персонажей эпизода. Пока изображения
+/// не загрузились (или их нет) показываем код эпизода на цветной плитке.
 class _Thumbnail extends StatelessWidget {
-  const _Thumbnail({required this.code});
+  const _Thumbnail({required this.code, this.imageUrls = const []});
+  final String code;
+  final List<String> imageUrls;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12),
+      child: SizedBox(
+        width: 52,
+        height: 52,
+        child: imageUrls.isEmpty
+            ? _CodeTile(code: code)
+            : AvatarCollage(imageUrls: imageUrls),
+      ),
+    );
+  }
+}
+
+class _CodeTile extends StatelessWidget {
+  const _CodeTile({required this.code});
   final String code;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 52,
-      height: 52,
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: const LinearGradient(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [AppColors.accent, AppColors.accentDark],

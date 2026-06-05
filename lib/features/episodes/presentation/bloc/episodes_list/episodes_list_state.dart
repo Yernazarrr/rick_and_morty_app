@@ -7,13 +7,25 @@ class EpisodesListState extends Equatable {
     this.status = EpisodesStatus.initial,
     this.all = const [],
     this.query = '',
+    this.characterImages = const {},
     this.failure,
   });
 
   final EpisodesStatus status;
   final List<Episode> all;
   final String query;
+
+  /// Аватары персонажей по id — для обложек-коллажей плиток эпизодов
+  /// (id персонажа -> URL изображения). Подгружаются отдельным запросом.
+  final Map<int, String> characterImages;
   final Failure? failure;
+
+  /// URL аватаров первых персонажей эпизода — основа обложки-коллажа.
+  List<String> coverImagesFor(Episode episode) => episode.characterIds
+      .take(4)
+      .map((id) => characterImages[id])
+      .whereType<String>()
+      .toList();
 
   /// Отсортированный список сезонов без повторов, присутствующих в данных.
   List<int> get seasons {
@@ -44,15 +56,17 @@ class EpisodesListState extends Equatable {
     EpisodesStatus? status,
     List<Episode>? all,
     String? query,
+    Map<int, String>? characterImages,
     Failure? failure,
   }) =>
       EpisodesListState(
         status: status ?? this.status,
         all: all ?? this.all,
         query: query ?? this.query,
+        characterImages: characterImages ?? this.characterImages,
         failure: failure ?? this.failure,
       );
 
   @override
-  List<Object?> get props => [status, all, query, failure];
+  List<Object?> get props => [status, all, query, characterImages, failure];
 }
