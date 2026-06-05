@@ -38,8 +38,9 @@ class EpisodeListTile extends StatelessWidget {
                 children: [
                   Text(
                     context.l10n.episodeNumber(episode.numberInSeason),
-                    style: context.textTheme.labelSmall
-                        ?.copyWith(color: AppColors.accent),
+                    style: context.textTheme.labelSmall?.copyWith(
+                      color: AppColors.accent,
+                    ),
                   ),
                   const SizedBox(height: 3),
                   Text(
@@ -53,8 +54,10 @@ class EpisodeListTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded,
-                color: context.statusColors.secondaryText),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: context.statusColors.secondaryText,
+            ),
           ],
         ),
       ),

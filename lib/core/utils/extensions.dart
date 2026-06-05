@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../theme/app_theme.dart';
 import '../../l10n/app_localizations.dart';
+import '../theme/app_theme.dart';
 
 extension BuildContextX on BuildContext {
   AppLocalizations get l10n => AppLocalizations.of(this)!;
